@@ -1,26 +1,94 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContextBase";
+import { EMAIL_RE } from "./Register";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [fieldErrors, setFieldErrors] = useState({});
   const { login, loading, error } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const success = await login(email, password);
-    console.log(success); // return true or false 
-    if (success) {
-      navigate("/");
+  const handleOnBlur = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    const msg = validateField(name, value);
+    if (msg) setError(name, msg);
+    else clearError(name);
+  };
+
+  const setError = (name, msg) => {
+    setFieldErrors((prev) => ({ ...prev, [name]: msg }));
+  };
+
+  const clearError = (name) => {
+    setFieldErrors((prev) => {
+      const copy = { ...prev };
+      delete copy[name];
+      return copy;
+    });
+  };
+
+  const validateField = (name, value) => {
+    const res = String(value ?? "").trim();
+    switch (name) {
+      case "email":
+        if (!res) return "Email is required";
+        if (!res.includes("@")) return "Email is invalid";
+        return "";
+      case "password":
+        if (!res) return "Password is required";
+        if (res.length < 6) return "Password must be at least 6 characters";
+        return "";
+      default:
+        return "";
     }
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Optional: Validate on change or just on blur. User code had inconsistent logic, keeping simple update here.
+    // If we want instant feedback:
+    const msg = validateField(name, value);
+    if (msg) setError(name, msg);
+    else clearError(name);
+  };
+
+  const validateAll = () => {
+    const errs = {};
+    if (!formData.email.trim()) errs.email = "Email is required.";
+    else if (!EMAIL_RE.test(formData.email.trim()))
+      errs.email = "Please enter a valid email.";
+    if (!formData.password) errs.password = "Password is required.";
+    else if (formData.password.length < 6)
+      errs.password = "Password must be at least 6 characters.";
+    setFieldErrors(errs);
+    return Object.keys(errs).length === 0;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    
+    // Validate all before submitting
+    const ok = validateAll();
+    if (ok) {
+      const success = await login(formData.email, formData.password);
+      if (success) {
+        navigate("/");
+      }
+    }
+    return;
+  };
+
+  const inputClass = (name) => `input input-bordered ${fieldErrors[name] ? "input-error" : ""}`;
 
   return (
     <div className="flex justify-center items-center min-h-[60vh]">
       <div className="card w-full max-w-sm shrink-0 shadow-2xl bg-base-100">
-        <form className="card-body" onSubmit={handleSubmit}>
+        <form className="card-body" onSubmit={handleSubmit} noValidate>
           <h2 className="card-title justify-center text-2xl font-bold mb-4">Login</h2>
           
           {error && (
@@ -36,12 +104,19 @@ export default function Login() {
             </label>
             <input
               type="email"
+              name="email"
               placeholder="email"
-              className="input input-bordered"
+              className={inputClass("email")}
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onBlur={handleOnBlur}
+              onChange={handleChange}
             />
+            {fieldErrors.email && (
+              <label className="label">
+                <span className="label-text-alt text-error">{fieldErrors.email}</span>
+              </label>
+            )}
           </div>
           <div className="form-control">
             <label className="label">
@@ -49,12 +124,19 @@ export default function Login() {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="password"
-              className="input input-bordered"
+              className={inputClass("password")}
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onBlur={handleOnBlur}
+              onChange={handleChange}
             />
+            {fieldErrors.password && (
+              <label className="label">
+                <span className="label-text-alt text-error">{fieldErrors.password}</span>
+              </label>
+            )}
             <label className="label">
               <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
             </label>
