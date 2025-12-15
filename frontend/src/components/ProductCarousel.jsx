@@ -52,8 +52,8 @@ const ProductCarousel = ({ title, products }) => {
         className="flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {products.map((product) => (
-          <div key={product.product_id} className="flex-none w-64">
+        {products.map((product, index) => (
+          <div key={product.product_id || index} className="flex-none w-64">
             <ProductCard product={product} />
           </div>
         ))}
