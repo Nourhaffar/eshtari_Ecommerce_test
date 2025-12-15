@@ -11,6 +11,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const success = await login(email, password);
+    console.log(success); // return true or false 
     if (success) {
       navigate("/");
     }
