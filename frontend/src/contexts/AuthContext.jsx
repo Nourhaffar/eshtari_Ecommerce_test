@@ -1,9 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import { login as apiLogin, register as apiRegister } from "../services/api";
+import { AuthContext } from "./AuthContextBase";
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   // Lazy initialization - only runs once on mount
