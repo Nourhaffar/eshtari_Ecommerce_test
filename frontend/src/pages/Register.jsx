@@ -13,7 +13,6 @@ export default function Register() {
     password: "",
     confirm_password: "",
   });
-
   const [fieldErrors, setFieldErrors] = useState({});
 
   const { register, loading, error } = useAuth();
@@ -140,8 +139,6 @@ export default function Register() {
           <h2 className="card-title justify-center text-2xl font-bold mb-4">
             Create Account
           </h2>
-
-          {/* خطأ عام من السيرفر */}
           {error && (
             <div role="alert" className="alert alert-error text-sm p-3">
               <span>{error}</span>
@@ -261,26 +258,34 @@ export default function Register() {
             )}
           </div>
 
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Confirm Password</span>
-            </label>
-            <input
-              type="password"
-              name="confirm_password"
-              className={inputClass("confirm_password")}
-              value={formData.confirm_password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="new-password"
-            />
-            {fieldErrors.confirm_password && (
+          <div
+            className={`transition-all duration-500 ease-in-out overflow-hidden ${
+              formData.password && formData.password.length >= 6
+                ? "max-h-24 opacity-100"
+                : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="form-control">
               <label className="label">
-                <span className="label-text-alt text-error">
-                  {fieldErrors.confirm_password}
-                </span>
+                <span className="label-text">Confirm Password</span>
               </label>
-            )}
+              <input
+                type="password"
+                name="confirm_password"
+                className={inputClass("confirm_password")}
+                value={formData.confirm_password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="new-password"
+              />
+              {fieldErrors.confirm_password && (
+                <label className="label">
+                  <span className="label-text-alt text-error">
+                    {fieldErrors.confirm_password}
+                  </span>
+                </label>
+              )}
+            </div>
           </div>
 
           <div className="form-control mt-6">
