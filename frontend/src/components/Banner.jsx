@@ -32,7 +32,7 @@ const Banner = ({ banners }) => {
   };
 
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-xl">
+    <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-xl">
       {/* Banner Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
