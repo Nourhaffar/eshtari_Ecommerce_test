@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Banner = ({ banners }) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const data = {
+    title : "Take care of your car… and leave the rest to us.",
+    description : "Discover the best genuine spare parts and accessories that give your car enhanced performance, safety, and a stylish look. Exclusive offers and guaranteed quality.",
+    btn: "Shop Now",
+  }
   useEffect(() => {
     if (!banners || banners.length === 0) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % banners.length);
-    }, 5000); // Auto-slide every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [banners]);
@@ -33,7 +39,6 @@ const Banner = ({ banners }) => {
 
   return (
     <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-xl group">
-      {/* Banner Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -45,28 +50,25 @@ const Banner = ({ banners }) => {
               alt={banner.title || `Banner ${index + 1}`}
               className="w-full h-full object-cover"
             />
-            {banner.title && (
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                <div className={`p-8 text-white transition-all duration-700 transform ${
-                    index === currentIndex ? "translate-y-0 opacity-100 delay-300" : "translate-y-8 opacity-0"
-                  }`}>
-                  <h2 className="text-3xl md:text-5xl font-bold mb-2 drop-shadow-lg">
-                    {banner.title}
-                  </h2>
-                  {banner.description && (
-                    <p className="text-lg md:text-xl opacity-90 drop-shadow-md">
-                      {banner.description}
-                    </p>
-                  )}
-                </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
+              <div className={`p-8 md:p-12 text-white transition-all duration-700 transform w-full md:w-2/3 lg:w-1/2 ${
+                  index === currentIndex ? "translate-y-0 opacity-100 delay-300" : "translate-y-8 opacity-0"
+                }`}>
+                <h2 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg leading-tight">
+                  {data.title}
+                </h2>
+                <p className="text-lg md:text-xl opacity-90 drop-shadow-md mb-6 line-clamp-3">
+                  {data.description}
+                </p>
+                <button className="btn btn-primary border-none shadow-lg hover:scale-105 transition-transform no-animation" onClick={() => navigate('/filtered')}>
+                  {data.btn}
+                </button>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Navigation Arrows */}
-      {/* Navigation Arrows */}
       {banners.length > 1 && (
         <>
           <button
@@ -86,7 +88,6 @@ const Banner = ({ banners }) => {
         </>
       )}
 
-      {/* Dots Indicator */}
       {banners.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {banners.map((_, index) => (

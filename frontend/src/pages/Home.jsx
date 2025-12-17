@@ -5,6 +5,7 @@ import ProductCarousel from '../components/ProductCarousel.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
 import ScrollReveal from '../components/ScrollReveal.jsx';
 import { getHomeWidgets } from '../services/api.js';
+import { ServerCrash, PackageOpen } from 'lucide-react';
 
 const Home = () => {
   const [widgets, setWidgets] = useState(null);
@@ -59,13 +60,12 @@ const Home = () => {
   // Error State
   if (error) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="alert alert-error">
-          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>{error}</span>
-        </div>
+      <div className="container mx-auto px-4 py-8 min-h-[50vh] flex flex-col items-center justify-center text-center">
+        <ServerCrash className="w-20 h-20 text-base-300 mb-4" />
+        <h2 className="text-2xl font-bold mb-2">Something went wrong</h2>
+        <p className="text-base-content/60 max-w-md mx-auto mb-6">
+          We encountered an error while loading the content. Please try again later.
+        </p>
       </div>
     );
   }
@@ -73,13 +73,12 @@ const Home = () => {
   // Empty State
   if (!widgets || !widgets.data) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="alert alert-info">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>No content available at the moment.</span>
-        </div>
+      <div className="container mx-auto px-4 py-8 min-h-[50vh] flex flex-col items-center justify-center text-center">
+        <PackageOpen className="w-20 h-20 text-base-300 mb-4" />
+        <h2 className="text-2xl font-bold mb-2">No content available</h2>
+        <p className="text-base-content/60 max-w-md mx-auto">
+          It looks like there are no active widgets or banners to display at the moment.
+        </p>
       </div>
     );
   }
@@ -90,7 +89,6 @@ const Home = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       {widgetsData.map((widget) => {
-        // 1. Main Banner Slider
         if (widget.type === 'banner' && widget.display === 'slider') {
           return (
             <ScrollReveal key={widget.mobile_widget_id} className="mb-14 overflow-hidden">
@@ -98,8 +96,6 @@ const Home = () => {
             </ScrollReveal>
           );
         }
-
-        // 2. Banner Grid
         if (widget.type === 'banner' && widget.display === 'grid') {
           const shuffled = widget.banner_images.sort(() => 0.5 - Math.random());
           return (
@@ -108,8 +104,6 @@ const Home = () => {
             </ScrollReveal>
           );
         }
-
-        // 3. Product Carousel (Category)
         if (widget.type === 'category' && widget.display === 'carousel') {
           const product = widget.products.filter((product) => product.image_path !== false);
           const shuffled = product.sort(() => 0.5 - Math.random());
@@ -122,13 +116,11 @@ const Home = () => {
             </ScrollReveal>
           );
         }
-
-        // 4. Product Grid (Category)
         if (widget.type === 'category' && widget.display === 'grid') {
           const products = widget.products.filter((product) => product.image_path);
           const shuffled = products.sort(() => 0.5 - Math.random());
           return (
-             <ScrollReveal key={widget.mobile_widget_id}>
+            <ScrollReveal key={widget.mobile_widget_id}>
                 <ProductGrid 
                 title={widget.title} 
                 products={shuffled} 

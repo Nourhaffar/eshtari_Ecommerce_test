@@ -154,7 +154,7 @@ export default function Register() {
                 type="text"
                 name="firstname"
                 className={inputClass("firstname")}
-                value={formData.firstname} //! in case badi a3mel edit lal profile 
+                value={formData.firstname}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 autoComplete="given-name"

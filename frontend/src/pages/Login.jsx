@@ -11,7 +11,6 @@ export default function Login() {
   const [fieldErrors, setFieldErrors] = useState({});
   const { login, loading, error } = useAuth();
   const navigate = useNavigate();
-
   const handleOnBlur = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -19,11 +18,9 @@ export default function Login() {
     if (msg) setError(name, msg);
     else clearError(name);
   };
-
   const setError = (name, msg) => {
     setFieldErrors((prev) => ({ ...prev, [name]: msg }));
   };
-
   const clearError = (name) => {
     setFieldErrors((prev) => {
       const copy = { ...prev };
@@ -47,17 +44,13 @@ export default function Login() {
         return "";
     }
   };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Optional: Validate on change or just on blur. User code had inconsistent logic, keeping simple update here.
-    // If we want instant feedback:
     const msg = validateField(name, value);
     if (msg) setError(name, msg);
     else clearError(name);
   };
-
   const validateAll = () => {
     const errs = {};
     if (!formData.email.trim()) errs.email = "Email is required.";
@@ -71,8 +64,6 @@ export default function Login() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault(); 
-    
-    // Validate all before submitting
     const ok = validateAll();
     if (ok) {
       const success = await login(formData.email, formData.password);
@@ -82,9 +73,7 @@ export default function Login() {
     }
     return;
   };
-
   const inputClass = (name) => `input input-bordered ${fieldErrors[name] ? "input-error" : ""}`;
-
   return (
     <div className="flex justify-center items-center min-h-[60vh]">
       <div className="card w-full max-w-sm shrink-0 shadow-2xl bg-base-100">

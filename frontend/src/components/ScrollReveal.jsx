@@ -8,9 +8,8 @@ const ScrollReveal = ({ children, className = "", mode = "fade-up", delay = 0 })
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-            // Add a small delay if content is loading or just for effect
           setTimeout(() => {
-               setIsVisible(true);
+            setIsVisible(true);
           }, delay);
           observer.unobserve(entry.target);
         }

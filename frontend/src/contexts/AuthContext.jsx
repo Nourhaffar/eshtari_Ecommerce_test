@@ -4,7 +4,6 @@ import { AuthContext } from "./AuthContextBase";
 
 
 export const AuthProvider = ({ children }) => {
-  // Lazy initialization - only runs once on mount
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("eshtari_user");
     return storedUser ? JSON.parse(storedUser) : null;
@@ -17,19 +16,8 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const response = await apiLogin(email, password);
-      // Logic depends on API response. Assuming { success: true, data: user, ... } or similar
-      // PRD doesn't specify response shape. I will log it and assume standard fields.
-      
-      console.log("Login Response:", response); // For debugging
-      
-      // Adaptation: Check for success flag or user object
-      // If API returns plain valid JSON, we assume success? 
-      // Most likely: { status: 200, data: {...} } or { error: ... }
-      
-      // Let's assume standard success.
+      console.log("Login Response:", response); 
       if (response && !response.error) {
-         // Mocking a user object if the API is just success: true 
-         // Or using the returned data.
         const userData = response.data || response.user || { email, name: "User" }; 
         setUser(userData);
         localStorage.setItem("eshtari_user", JSON.stringify(userData));

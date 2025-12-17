@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductDetail } from '../services/api.js';
 import { useCart } from '../contexts/CartContextBase';
+import { useAuth } from '../contexts/AuthContextBase';
 
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  
+  const { user } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -34,6 +36,11 @@ const Product = () => {
   }, [id]);
 
   const handleAddToCart = () => {
+    if (!user) {
+        navigate('/login');
+        return;
+    }
+
     if (product && product.data) {
       addToCart({
         product_id: product.data.product_id,
@@ -49,13 +56,10 @@ const Product = () => {
 
   const incrementQuantity = () => setQuantity(prev => prev + 1);
   const decrementQuantity = () => setQuantity(prev => prev > 1 ? prev - 1 : 1);
-
-  // Loading State
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Image Gallery Skeleton */}
           <div>
             <div className="skeleton h-96 w-full rounded-lg mb-4"></div>
             <div className="flex gap-2">
@@ -65,7 +69,6 @@ const Product = () => {
             </div>
           </div>
           
-          {/* Product Info Skeleton */}
           <div className="space-y-4">
             <div className="skeleton h-8 w-3/4"></div>
             <div className="skeleton h-6 w-1/4"></div>
@@ -77,7 +80,6 @@ const Product = () => {
     );
   }
 
-  // Error State
   if (error) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -94,7 +96,6 @@ const Product = () => {
     );
   }
 
-  // Empty State
   if (!product || !product.data) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -116,7 +117,6 @@ const Product = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
       <div className="text-sm breadcrumbs mb-6">
         <ul>
           <li><a onClick={() => navigate('/')} className="cursor-pointer">Home</a></li>
@@ -126,9 +126,7 @@ const Product = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Image Gallery */}
         <div>
-          {/* Main Image */}
           <div className="relative overflow-hidden rounded-lg shadow-xl mb-4 bg-base-200 aspect-square">
             <img
               src={images[selectedImage]?.popup || images[selectedImage]?.thumb || productData.thumb}
@@ -142,7 +140,6 @@ const Product = () => {
             )}
           </div>
 
-          {/* Thumbnail Gallery */}
           {images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-2">
               {images.map((image, index) => (
@@ -166,12 +163,9 @@ const Product = () => {
           )}
         </div>
 
-        {/* Product Information */}
         <div className="space-y-6">
-          {/* Title */}
           <h1 className="text-3xl md:text-4xl font-bold">{productData.name}</h1>
 
-          {/* Price */}
           <div className="flex items-center gap-4">
             {productData.special ? (
               <>
@@ -183,15 +177,29 @@ const Product = () => {
             )}
           </div>
 
-          {/* Description */}
           {productData.description && (
             <div className="prose max-w-none">
               <h3 className="text-xl font-semibold mb-2">Description</h3>
-              <div dangerouslySetInnerHTML={{ __html: productData.description }} />
+              <div 
+                className={`transition-all duration-300 ${isDescriptionExpanded ? 'max-h-[300px] overflow-y-auto pr-2' : 'max-h-[150px] overflow-hidden relative'}`}
+              >
+                <div dangerouslySetInnerHTML={{ __html: productData.description }} />
+                {!isDescriptionExpanded && (
+                    <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-base-100 to-transparent"></div>
+                )}
+              </div>
+              
+              {productData.description.length > 300 && (
+                  <button 
+                    onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+                    className="btn btn-link btn-sm pl-0 mt-1 no-underline hover:text-primary transition-colors font-semibold"
+                  >
+                    {isDescriptionExpanded ? 'Read Less' : 'Read More'}
+                  </button>
+              )}
             </div>
           )}
 
-          {/* Quantity Selector */}
           <div className="flex items-center gap-4">
             <span className="font-semibold">Quantity:</span>
             <div className="join">
@@ -217,7 +225,6 @@ const Product = () => {
             </div>
           </div>
 
-          {/* Add to Cart Button */}
           <button 
             onClick={handleAddToCart}
             className={`btn btn-primary btn-lg w-full ${addedToCart ? 'btn-success' : ''}`}
@@ -239,7 +246,6 @@ const Product = () => {
             )}
           </button>
 
-          {/* Additional Info */}
           {productData.manufacturer && (
             <div className="border-t pt-4">
               <p className="text-sm"><span className="font-semibold">Brand:</span> {productData.manufacturer}</p>

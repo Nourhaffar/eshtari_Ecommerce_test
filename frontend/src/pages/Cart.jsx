@@ -46,7 +46,6 @@ const Cart = () => {
       <h1 className="text-3xl font-bold mb-8">Shopping Cart ({totalItems} items)</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Cart Items List */}
         <div className="flex-1">
           <div className="bg-base-100 rounded-lg shadow-lg overflow-hidden">
             {cart.map((item) => (
@@ -54,7 +53,6 @@ const Cart = () => {
                 key={item.product_id}
                 className="p-4 border-b last:border-b-0 flex gap-4 items-center"
               >
-                {/* Product Image */}
                 <div className="w-24 h-24 flex-shrink-0 bg-base-200 rounded-md overflow-hidden">
                   <img
                     src={item.image_path || item.thumb}
@@ -62,8 +60,6 @@ const Cart = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
-                {/* Product Details */}
                 <div className="flex-1">
                   <Link
                     to={`/product/${item.product_id}`}
@@ -76,8 +72,6 @@ const Cart = () => {
                     {parseFloat(item.special || item.price).toFixed(2)}
                   </div>
                 </div>
-
-                {/* Quantity Controls */}
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
@@ -94,8 +88,6 @@ const Cart = () => {
                     +
                   </button>
                 </div>
-
-                {/* Remove Button */}
                 <button
                   onClick={() => removeFromCart(item.product_id)}
                   className="btn btn-ghost btn-circle text-error"
@@ -120,29 +112,22 @@ const Cart = () => {
             ))}
           </div>
         </div>
-
-        {/* Order Summary */}
         <div className="w-full lg:w-80 flex-shrink-0">
           <div className="bg-base-100 rounded-lg shadow-lg p-6 sticky top-24">
             <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-            
             <div className="flex justify-between mb-2">
               <span className="text-gray-600">Subtotal</span>
               <span className="font-semibold">{total.toFixed(2)}</span>
             </div>
-            
             <div className="flex justify-between mb-4">
               <span className="text-gray-600">Shipping</span>
               <span className="text-green-600 text-sm">Calculated at checkout</span>
             </div>
-            
             <div className="divider my-2"></div>
-            
             <div className="flex justify-between mb-6 text-lg font-bold">
               <span>Total</span>
               <span>{total.toFixed(2)}</span>
             </div>
-
             <button className="btn btn-primary w-full text-lg">
               Proceed to Checkout
             </button>
