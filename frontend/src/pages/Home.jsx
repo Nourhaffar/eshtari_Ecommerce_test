@@ -110,11 +110,12 @@ const Home = () => {
 
         // 3. Product Carousel (Category)
         if (widget.type === 'category' && widget.display === 'carousel') {
+          const product = widget.products.filter((product) => product.image_path !== false);
           return (
             <ProductCarousel 
               key={widget.mobile_widget_id}
               title={widget.title} 
-              products={widget.products} 
+              products={product} 
             />
           );
         }
