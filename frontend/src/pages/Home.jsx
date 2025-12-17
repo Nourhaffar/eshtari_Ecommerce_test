@@ -100,9 +100,10 @@ const Home = () => {
 
         // 2. Banner Grid
         if (widget.type === 'banner' && widget.display === 'grid') {
+          const shuffled = widget.banner_images.sort(() => 0.5 - Math.random());
           return (
             <div key={widget.mobile_widget_id} className="mb-12">
-              <BannerGrid banners={widget.banner_images} />
+              <BannerGrid banners={shuffled} />
             </div>
           );
         }
