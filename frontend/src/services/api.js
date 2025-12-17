@@ -17,11 +17,11 @@ apiClient.interceptors.response.use(
 
 export const getHomeWidgets = async () => {
   try {
-    const data = await apiClient.get('/home_widgets');
+    const data = await axios.get('http://localhost:5000/api/home_widgets');
     return data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch home widgets');
-  }
+  }   
 };
 
 export const getProductDetail = async (productId) => {

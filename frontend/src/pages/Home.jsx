@@ -84,7 +84,8 @@ const Home = () => {
   }
 
   // Parse widgets data
-  const widgetsData = widgets.data || [];
+  const widgetsData = widgets.data.data || [];
+  console.log(widgetsData);
   return (
     <div className="container mx-auto px-4 py-8">
       {widgetsData.map((widget) => {
