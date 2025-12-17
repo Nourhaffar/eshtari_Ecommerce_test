@@ -16,7 +16,6 @@ const Home = () => {
         setLoading(true);
         setError(null);
         const data = await getHomeWidgets();
-        console.log(data);
         setWidgets(data);
       } catch (err) {
         setError(err.message || 'Failed to load home page data');
@@ -86,7 +85,6 @@ const Home = () => {
 
   // Parse widgets data
   const widgetsData = widgets.data || [];
-
   return (
     <div className="container mx-auto px-4 py-8">
       {widgetsData.map((widget) => {
