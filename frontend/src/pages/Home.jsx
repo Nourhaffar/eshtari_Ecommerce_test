@@ -3,6 +3,7 @@ import Banner from '../components/Banner.jsx';
 import BannerGrid from '../components/BannerGrid.jsx';
 import ProductCarousel from '../components/ProductCarousel.jsx';
 import ProductGrid from '../components/ProductGrid.jsx';
+import ScrollReveal from '../components/ScrollReveal.jsx';
 import { getHomeWidgets } from '../services/api.js';
 
 const Home = () => {
@@ -92,9 +93,9 @@ const Home = () => {
         // 1. Main Banner Slider
         if (widget.type === 'banner' && widget.display === 'slider') {
           return (
-            <div key={widget.mobile_widget_id} className="mb-12">
+            <ScrollReveal key={widget.mobile_widget_id} className="mb-14 overflow-hidden">
               <Banner banners={widget.banner_images} />
-            </div>
+            </ScrollReveal>
           );
         }
 
@@ -102,9 +103,9 @@ const Home = () => {
         if (widget.type === 'banner' && widget.display === 'grid') {
           const shuffled = widget.banner_images.sort(() => 0.5 - Math.random());
           return (
-            <div key={widget.mobile_widget_id} className="mb-12">
+            <ScrollReveal key={widget.mobile_widget_id} className="mb-12">
               <BannerGrid banners={shuffled} />
-            </div>
+            </ScrollReveal>
           );
         }
 
@@ -113,11 +114,12 @@ const Home = () => {
           const product = widget.products.filter((product) => product.image_path !== false);
           const shuffled = product.sort(() => 0.5 - Math.random());
           return (
-            <ProductCarousel 
-              key={widget.mobile_widget_id}
-              title={widget.title} 
-              products={shuffled} 
-            />
+            <ScrollReveal key={widget.mobile_widget_id}>
+                <ProductCarousel 
+                title={widget.title} 
+                products={shuffled} 
+                />
+            </ScrollReveal>
           );
         }
 
@@ -126,11 +128,12 @@ const Home = () => {
           const products = widget.products.filter((product) => product.image_path);
           const shuffled = products.sort(() => 0.5 - Math.random());
           return (
-            <ProductGrid 
-              key={widget.mobile_widget_id}
-              title={widget.title} 
-              products={shuffled} 
-            />
+             <ScrollReveal key={widget.mobile_widget_id}>
+                <ProductGrid 
+                title={widget.title} 
+                products={shuffled} 
+                />
+            </ScrollReveal>
           );
         }
 

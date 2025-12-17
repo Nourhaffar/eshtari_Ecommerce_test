@@ -32,7 +32,7 @@ const Banner = ({ banners }) => {
   };
 
   return (
-    <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-xl">
+    <div className="relative w-full h-[200px] md:h-[300px] lg:h-[400px] overflow-hidden rounded-lg shadow-xl group">
       {/* Banner Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
@@ -47,12 +47,14 @@ const Banner = ({ banners }) => {
             />
             {banner.title && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                <div className="p-8 text-white">
-                  <h2 className="text-3xl md:text-5xl font-bold mb-2">
+                <div className={`p-8 text-white transition-all duration-700 transform ${
+                    index === currentIndex ? "translate-y-0 opacity-100 delay-300" : "translate-y-8 opacity-0"
+                  }`}>
+                  <h2 className="text-3xl md:text-5xl font-bold mb-2 drop-shadow-lg">
                     {banner.title}
                   </h2>
                   {banner.description && (
-                    <p className="text-lg md:text-xl opacity-90">
+                    <p className="text-lg md:text-xl opacity-90 drop-shadow-md">
                       {banner.description}
                     </p>
                   )}
@@ -64,18 +66,19 @@ const Banner = ({ banners }) => {
       </div>
 
       {/* Navigation Arrows */}
+      {/* Navigation Arrows */}
       {banners.length > 1 && (
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 btn btn-circle btn-sm md:btn-md bg-white/80 hover:bg-white border-0"
+            className="absolute left-4 top-1/2 -translate-y-1/2 btn btn-circle btn-sm md:btn-md bg-white/80 hover:bg-white border-0 opacity-0 -translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out z-10 shadow-lg"
             aria-label="Previous slide"
           >
             ❮
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 btn btn-circle btn-sm md:btn-md bg-white/80 hover:bg-white border-0"
+            className="absolute right-4 top-1/2 -translate-y-1/2 btn btn-circle btn-sm md:btn-md bg-white/80 hover:bg-white border-0 opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-out z-10 shadow-lg"
             aria-label="Next slide"
           >
             ❯
@@ -85,18 +88,23 @@ const Banner = ({ banners }) => {
 
       {/* Dots Indicator */}
       {banners.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
           {banners.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-white w-6 md:w-8' 
-                  : 'bg-white/50 hover:bg-white/75'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
+            <div 
+                key={index}
+                className="transition-all duration-300 ease-out transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+                style={{ transitionDelay: `${index * 50}ms` }}
+            >
+                <button
+                onClick={() => goToSlide(index)}
+                className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
+                    index === currentIndex 
+                    ? 'bg-white w-6 md:w-8 shadow-md' 
+                    : 'bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+                />
+            </div>
           ))}
         </div>
       )}

@@ -1,4 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const PAGE_SIZE = 12;
 
@@ -43,7 +44,7 @@ const BannerGrid = ({ banners = [] }) => {
                 className="absolute top-1/2 -left-4 md:-left-12 -translate-y-1/2 z-10 p-2 rounded-full bg-base-100 shadow-lg hover:scale-110 disabled:opacity-0 disabled:pointer-events-none transition-all duration-300"
                 aria-label="Previous page"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                <ChevronLeft size={24} />
             </button>
             <button
                 onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
@@ -51,7 +52,7 @@ const BannerGrid = ({ banners = [] }) => {
                 className="absolute top-1/2 -right-4 md:-right-12 -translate-y-1/2 z-10 p-2 rounded-full bg-base-100 shadow-lg hover:scale-110 disabled:opacity-0 disabled:pointer-events-none transition-all duration-300"
                 aria-label="Next page"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <ChevronRight size={24} />
             </button>
         </>
       )}
@@ -67,25 +68,26 @@ const BannerGrid = ({ banners = [] }) => {
           return (
             <div
               key={uniqueKey}
-              className="relative overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer aspect-square group"
+              className="relative overflow-hidden rounded-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer aspect-square group bg-base-100"
             >
               <img
                 src={imageSrc}
                 alt={altText}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                 loading="lazy"
                 decoding="async"
               />
 
-              {banner.title && (
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="p-3 w-full">
-                    <h3 className="text-white font-semibold text-xs md:text-sm line-clamp-2">
-                      {banner.title}
-                    </h3>
-                  </div>
+              {/* Overlay with gradient - visible on hover */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                <div className="p-4 w-full transform transition-transform duration-500 delay-100 translate-y-2 group-hover:translate-y-0">
+                  <h3 className="text-white font-bold text-sm md:text-base line-clamp-2 drop-shadow-md">
+                    {banner.title}
+                  </h3>
+                   {/* Optional: Add a 'View' indicator or minimal text if available */}
+                  <span className="inline-block mt-2 text-xs text-white/90 font-medium border-b border-white/50 pb-0.5">Shop Now</span>
                 </div>
-              )}
+              </div>
             </div>
           );
         })}

@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContextBase";
 import { useCart } from "../../contexts/CartContextBase";
 import ThemeToggle from "../ThemeToggle";
+import { Home } from "lucide-react";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -54,7 +55,7 @@ export default function Navbar() {
       {/* Desktop Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/"><Home className="w-5 h-5" /></Link></li>
         </ul>
       </div>
 
