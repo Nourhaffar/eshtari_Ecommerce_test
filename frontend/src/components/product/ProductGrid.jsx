@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard';
 
-import ScrollReveal from './ScrollReveal';
+import ScrollReveal from '../common/ScrollReveal';
 
 const ProductGrid = ({ title, products }) => {
   if (!products || products.length === 0) {

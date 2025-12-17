@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import ProductCard from './ProductCard';
-import ScrollReveal from './ScrollReveal';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ProductCard from './ProductCard';
+import ScrollReveal from '../common/ScrollReveal';
 
 const ProductCarousel = ({ title, products }) => {
   const scrollContainerRef = useRef(null);

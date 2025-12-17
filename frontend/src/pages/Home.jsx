@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import Banner from '../components/Banner.jsx';
-import BannerGrid from '../components/BannerGrid.jsx';
-import ProductCarousel from '../components/ProductCarousel.jsx';
-import ProductGrid from '../components/ProductGrid.jsx';
-import ScrollReveal from '../components/ScrollReveal.jsx';
+import Banner from '../components/home/Banner.jsx';
+import BannerGrid from '../components/home/BannerGrid.jsx';
+import ProductCarousel from '../components/product/ProductCarousel.jsx';
+import ProductGrid from '../components/product/ProductGrid.jsx';
+import ScrollReveal from '../components/common/ScrollReveal.jsx';
 import { getHomeWidgets } from '../services/api.js';
 import { ServerCrash, PackageOpen } from 'lucide-react';
 
@@ -23,28 +23,21 @@ const Home = () => {
         setError(err.message || 'Failed to load home page data');
         console.error('Error fetching home widgets:', err);
       } finally {
-        setLoading(false);
+        setLoading(true);
       }
     };
 
     fetchHomeData();
   }, []);
-
-  // Loading State
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        {/* Banner Skeleton */}
         <div className="skeleton h-[400px] md:h-[500px] lg:h-[600px] w-full rounded-lg mb-12"></div>
-        
-        {/* Grid Skeleton */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="skeleton h-48 w-full rounded-lg"></div>
           ))}
         </div>
-
-        {/* Carousel Skeleton */}
         <div className="mb-12">
           <div className="skeleton h-8 w-48 mb-6"></div>
           <div className="flex gap-4 overflow-hidden">
@@ -56,8 +49,6 @@ const Home = () => {
       </div>
     );
   }
-
-  // Error State
   if (error) {
     return (
       <div className="container mx-auto px-4 py-8 min-h-[50vh] flex flex-col items-center justify-center text-center">
@@ -69,8 +60,6 @@ const Home = () => {
       </div>
     );
   }
-
-  // Empty State
   if (!widgets || !widgets.data) {
     return (
       <div className="container mx-auto px-4 py-8 min-h-[50vh] flex flex-col items-center justify-center text-center">
@@ -82,8 +71,6 @@ const Home = () => {
       </div>
     );
   }
-
-  // Parse widgets data
   const widgetsData = widgets.data.data || [];
   console.log(widgetsData);
   return (

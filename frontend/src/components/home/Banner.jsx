@@ -50,17 +50,20 @@ const Banner = ({ banners }) => {
               alt={banner.title || `Banner ${index + 1}`}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end">
-              <div className={`p-8 md:p-12 text-white transition-all duration-700 transform w-full md:w-2/3 lg:w-1/2 ${
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end justify-start">
+              <div className={`p-6 md:p-12 text-white transition-all duration-700 transform w-full md:w-3/4 lg:w-1/2 ${
                   index === currentIndex ? "translate-y-0 opacity-100 delay-300" : "translate-y-8 opacity-0"
                 }`}>
-                <h2 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg leading-tight">
+                <h2 className="text-xl md:text-3xl lg:text-5xl font-bold mb-2 md:mb-4 drop-shadow-lg leading-tight line-clamp-2 md:line-clamp-none">
                   {data.title}
                 </h2>
-                <p className="text-lg md:text-xl opacity-90 drop-shadow-md mb-6 line-clamp-3">
+                <p className="text-sm md:text-lg lg:text-xl opacity-90 drop-shadow-md mb-4 md:mb-6 line-clamp-2 md:line-clamp-3">
                   {data.description}
                 </p>
-                <button className="btn btn-primary border-none shadow-lg hover:scale-105 transition-transform no-animation" onClick={() => navigate('/filtered')}>
+                <button 
+                  className="btn btn-primary btn-sm md:btn-md border-none shadow-lg hover:scale-105 transition-transform no-animation" 
+                  onClick={() => navigate('/filtered')}
+                >
                   {data.btn}
                 </button>
               </div>

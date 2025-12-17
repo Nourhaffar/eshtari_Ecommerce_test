@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContextBase";
 import { useCart } from "../../contexts/CartContextBase";
-import ThemeToggle from "../ThemeToggle";
+import ThemeToggle from "../layout/ThemeToggle";
 import { Home } from "lucide-react";
 
 export default function Navbar() {
