@@ -1,10 +1,12 @@
 import React from 'react';
 import { FilterX } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/common/SEO.jsx';
 
 const Filtered = () => {
     return (
         <div className="min-h-[60vh] flex flex-col items-center justify-center p-4 text-center">
+            <SEO title="No Products Found - Eshtari" description="No products matched your search criteria." />
             {/* Icon Container */}
             <div className="mb-6">
                 <FilterX className="w-24 h-24 text-base-content/20" />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContextBase";
+import SEO from "../components/common/SEO.jsx";
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -134,6 +135,7 @@ export default function Register() {
 
   return (
     <div className="flex justify-center items-center py-10">
+      <SEO title="Create Account - Eshtari" description="Register for a new account on Eshtari and start shopping today." />
       <div className="card w-full max-w-md shrink-0 shadow-2xl bg-base-100">
         <form className="card-body" onSubmit={handleSubmit} noValidate>
           <h2 className="card-title justify-center text-2xl font-bold mb-4">

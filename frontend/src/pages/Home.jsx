@@ -4,6 +4,7 @@ import BannerGrid from '../components/home/BannerGrid.jsx';
 import ProductCarousel from '../components/product/ProductCarousel.jsx';
 import ProductGrid from '../components/product/ProductGrid.jsx';
 import ScrollReveal from '../components/common/ScrollReveal.jsx';
+import SEO from '../components/common/SEO.jsx';
 import { getHomeWidgets } from '../services/api.js';
 import { ServerCrash, PackageOpen } from 'lucide-react';
 
@@ -75,6 +76,7 @@ const Home = () => {
   console.log(widgetsData);
   return (
     <div className="container mx-auto px-4 py-8">
+      <SEO title="Eshtari - Home" description="Welcome to Eshtari, your one-stop shop for the best products at unbeatable prices!" />
       {widgetsData.map((widget) => {
         if (widget.type === 'banner' && widget.display === 'slider') {
           return (

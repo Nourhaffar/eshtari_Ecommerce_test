@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getProductDetail } from '../services/api.js';
 import { useCart } from '../contexts/CartContextBase';
 import { useAuth } from '../contexts/AuthContextBase';
+import SEO from '../components/common/SEO.jsx';
 
 const Product = () => {
   const { id } = useParams();
@@ -117,6 +118,11 @@ const Product = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <SEO 
+        title={`${productData.name} - Eshtari`} 
+        description={`Buy ${productData.name} at the best price. ${productData.description ? productData.description.replace(/<[^>]*>/g, '').substring(0, 150) + '...' : ''}`}
+        type="product"
+      />
       <div className="text-sm breadcrumbs mb-6">
         <ul>
           <li><a onClick={() => navigate('/')} className="cursor-pointer">Home</a></li>

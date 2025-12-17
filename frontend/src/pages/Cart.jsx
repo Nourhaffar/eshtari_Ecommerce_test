@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/CartContextBase';
+import SEO from '../components/common/SEO.jsx';
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, totalItems } = useCart();
@@ -16,6 +17,7 @@ const Cart = () => {
   if (cart.length === 0) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
+        <SEO title="Shopping Cart - Eshtari" description="View and manage the items in your shopping cart on Eshtari." />
         <div className="mb-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +45,7 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <SEO title="Shopping Cart - Eshtari" description="View and manage the items in your shopping cart on Eshtari." />
       <h1 className="text-3xl font-bold mb-8">Shopping Cart ({totalItems} items)</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">

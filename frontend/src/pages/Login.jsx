@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContextBase";
 import { EMAIL_RE } from "./Register";
+import SEO from "../components/common/SEO.jsx";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -76,6 +77,7 @@ export default function Login() {
   const inputClass = (name) => `input input-bordered ${fieldErrors[name] ? "input-error" : ""}`;
   return (
     <div className="flex justify-center items-center min-h-[60vh]">
+      <SEO title="Login - Eshtari" description="Login to your Eshtari account to access your orders and wishlist." />
       <div className="card w-full max-w-sm shrink-0 shadow-2xl bg-base-100">
         <form className="card-body" onSubmit={handleSubmit} noValidate>
           <h2 className="card-title justify-center text-2xl font-bold mb-4">Login</h2>
