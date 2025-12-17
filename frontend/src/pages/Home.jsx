@@ -23,7 +23,7 @@ const Home = () => {
         setError(err.message || 'Failed to load home page data');
         console.error('Error fetching home widgets:', err);
       } finally {
-        setLoading(true);
+        setLoading(false);
       }
     };
 
