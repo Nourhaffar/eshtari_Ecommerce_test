@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+const BASE_URL = import.meta.env.MODE === "development" ? 'http://localhost:5000/api' : "/api";
 const apiClient = axios.create({
   baseURL: 'https://api.sari3.com/v2/index.php?route=assignment_test',
   headers: {
@@ -17,7 +17,7 @@ apiClient.interceptors.response.use(
 
 export const getHomeWidgets = async () => {
   try {
-    const data = await axios.get('http://localhost:5000/api/home_widgets');
+    const data = await axios.get(`${BASE_URL}/home_widgets`);
     return data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'Failed to fetch home widgets');

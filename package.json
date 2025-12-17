@@ -1,0 +1,22 @@
+{
+  "name": "eshtari",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend --legacy-peer-deps && npm install --prefix frontend --legacy-peer-deps && npm run build --prefix frontend ",
+    "start": "npm start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nourhaffar/eshtari_Ecommerce_test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Nourhaffar/eshtari_Ecommerce_test/issues"
+  },
+  "homepage": "https://github.com/Nourhaffar/eshtari_Ecommerce_test#readme"
+}
