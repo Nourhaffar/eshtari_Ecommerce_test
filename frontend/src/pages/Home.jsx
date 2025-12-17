@@ -123,11 +123,12 @@ const Home = () => {
         // 4. Product Grid (Category)
         if (widget.type === 'category' && widget.display === 'grid') {
           const products = widget.products.filter((product) => product.image_path);
+          const shuffled = products.sort(() => 0.5 - Math.random());
           return (
             <ProductGrid 
               key={widget.mobile_widget_id}
               title={widget.title} 
-              products={products} 
+              products={shuffled} 
             />
           );
         }
