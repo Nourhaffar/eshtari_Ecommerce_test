@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import apiRoutes from './routes/api.js';
 import { fileURLToPath } from 'url';
+import path from 'path';
 
 dotenv.config();
 
